@@ -1,0 +1,45 @@
+@layer base,components,game;
+@layer base { *{box-sizing:border-box} html{scroll-behavior:smooth} body{margin:0;background:var(--bg);color:var(--text);font-family:var(--font-ui);min-height:100vh} button,input,textarea{font:inherit} button{cursor:pointer} button:focus-visible,a:focus-visible,textarea:focus-visible{outline:3px solid var(--gold);outline-offset:3px} .hidden{display:none!important} .muted{color:var(--muted)} .skip-link{position:absolute;left:-999px}.skip-link:focus{left:12px;z-index:1000;background:white;color:black;padding:10px}.loading-screen{position:fixed;inset:0;z-index:10000;background:var(--bg);display:grid;place-content:center;text-align:center;gap:16px}.loading-track{width:min(420px,80vw);height:8px;border-radius:99px;background:var(--surface-2);overflow:hidden}.loading-bar{height:100%;width:8%;background:linear-gradient(90deg,var(--accent),var(--accent-2));transition:width .35s}.brand-mark{width:72px;height:72px;border-radius:22px;margin:auto;display:grid;place-items:center;font-weight:900;font-size:28px;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#071016}.brand-mark.small{width:34px;height:34px;border-radius:10px;font-size:13px}.topbar{height:64px;display:flex;align-items:center;gap:14px;padding:8px 18px;border-bottom:1px solid color-mix(in oklab,var(--text) 10%,transparent);position:sticky;top:0;z-index:50;background:color-mix(in oklab,var(--bg) 86%,transparent);backdrop-filter:blur(14px)}.brand{border:0;background:none;color:var(--text);display:flex;align-items:center;gap:9px}.rank-strip{margin-left:auto;width:min(320px,26vw);display:flex;align-items:center;gap:8px;font-size:12px}.xp-track{flex:1;height:7px;border-radius:99px;background:var(--surface-2);overflow:hidden}.xp-bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--gold));transition:width .5s}.top-actions{display:flex;gap:6px}.icon-button,.pill-button,.text-button,.button{min-height:44px;border:1px solid color-mix(in oklab,var(--text) 12%,transparent);border-radius:10px;background:var(--surface-2);color:var(--text)}.icon-button{width:44px}.pill-button{padding:0 12px}.text-button{border:0;background:transparent}.button{padding:0 14px}.button.primary{background:var(--surface-2)}.button.accent{border:0;background:linear-gradient(135deg,var(--accent),var(--accent-2));color:#09111b;font-weight:800}.app-shell{display:grid;grid-template-columns:210px minmax(0,1fr);min-height:calc(100vh - 64px)}.sidebar{border-right:1px solid color-mix(in oklab,var(--text) 9%,transparent);padding:16px}.world-nav{display:grid;gap:8px}.streak-card{margin-top:18px;padding:12px;border-radius:12px;background:var(--surface)}.toast-region{position:fixed;right:18px;bottom:18px;z-index:200;display:grid;gap:8px}.toast{padding:12px 16px;border-radius:12px;background:var(--surface);border-left:4px solid var(--accent);box-shadow:var(--shadow);animation:toast-in .25s}@keyframes toast-in{from{transform:translateY(12px);opacity:0}}kbd{font-family:var(--font-mono);font-size:10px;opacity:.7}@media(max-width:760px){.app-shell{grid-template-columns:1fr}.sidebar{display:none}.topbar{padding:6px 8px}.rank-strip{width:120px}.rank-strip>span:first-child{display:none}.brand strong{display:none}}}
+
+@layer base {
+  @media (min-width: 761px) {
+    #menuButton {
+      display: none;
+    }
+  }
+
+  #rankTitle,
+  #coinButton,
+  #soundButton,
+  .streak-card {
+    display: none;
+  }
+
+  .top-actions {
+    margin-left: 8px;
+  }
+
+  @media (max-width: 760px) {
+    .sidebar {
+      display: block;
+      position: fixed;
+      top: 64px;
+      bottom: 0;
+      left: 0;
+      z-index: 45;
+      width: min(280px, 85vw);
+      overflow-y: auto;
+      background: var(--bg);
+      box-shadow: var(--shadow);
+      transform: translateX(-105%);
+      visibility: hidden;
+      transition:
+        transform 0.2s ease,
+        visibility 0.2s;
+    }
+    .sidebar.mobile-open {
+      transform: translateX(0);
+      visibility: visible;
+    }
+  }
+}

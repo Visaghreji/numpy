@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#090d18" />
+    <title>NumPy Quest</title>
+    <link rel="stylesheet" href="css/tokens.css" />
+    <link rel="stylesheet" href="css/base.css" />
+    <link rel="stylesheet" href="css/components.css" />
+    <link rel="stylesheet" href="css/game.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/codemirror.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/theme/material-darker.min.css"
+    />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to game</a>
+    <div id="loadingScreen" class="loading-screen" role="status">
+      <div class="brand-mark">NQ</div>
+      <h1>NumPy Quest</h1>
+      <div class="loading-track">
+        <div id="loadingBar" class="loading-bar"></div>
+      </div>
+      <p id="loadingMessage">Summoning NumPy…</p>
+    </div>
+
+    <header class="topbar">
+      <button id="menuButton" class="icon-button" aria-label="Open lessons">
+        ☰
+      </button>
+      <button class="brand" id="homeButton">
+        <span class="brand-mark small">NQ</span><strong>NumPy Quest</strong>
+      </button>
+      <div class="rank-strip">
+        <span id="rankTitle">Array Rookie</span>
+        <div class="xp-track"><div id="xpBar" class="xp-bar"></div></div>
+        <span id="xpText">0 XP</span>
+      </div>
+      <div class="top-actions">
+        <button id="coinButton" class="pill-button" aria-label="Coins">
+          ◈ <span id="coinCount">0</span>
+        </button>
+        <button id="soundButton" class="icon-button" aria-label="Toggle sound">
+          🔇
+        </button>
+        <button id="themeButton" class="icon-button" aria-label="Toggle theme">
+          ◐
+        </button>
+      </div>
+    </header>
+
+    <main id="main" class="app-shell">
+      <aside id="sidebar" class="sidebar">
+        <nav id="worldNav" class="world-nav" aria-label="Lessons"></nav>
+        <div class="streak-card">
+          <div>
+            <span class="flame">🔥</span
+            ><strong id="streakCount">0 day streak</strong>
+          </div>
+          <small id="nextGoal">Keep learning today</small>
+        </div>
+      </aside>
+
+      <section id="mapView" class="map-view">
+        <div class="map-heading">
+          <div>
+            <p class="eyebrow">LEARN BY DOING</p>
+            <h1 id="mapTitle">Boot Camp</h1>
+            <p class="map-subtitle">Short lessons. Quick practice. Pick up where you left off.</p>
+          </div>
+          <div class="map-actions">
+            <span id="worldProgress" class="world-progress">0 / 8 lessons</span>
+            <button id="continueButton" class="button accent">Start learning</button>
+          </div>
+        </div>
+        <div id="worldMap" class="world-map" aria-label="Lessons"></div>
+      </section>
+
+      <section id="levelView" class="level-view hidden">
+        <div class="level-toolbar">
+          <button id="backToMap" class="text-button">← Lessons</button>
+          <div class="level-heading">
+            <span id="levelIndex">0.1</span>
+            <h1 id="levelTitle"></h1>
+          </div>
+          <div id="levelStars" class="stars hidden">☆ ☆ ☆</div>
+        </div>
+        <div class="study-grid">
+          <section class="task-panel" aria-label="Concept and guided practice">
+            <article id="conceptCard" class="concept-card"></article>
+            <div id="practiceArea" class="practice-area"></div>
+          </section>
+
+          <section class="ide-panel" aria-label="Final coding task">
+            <div id="challengePrompt" class="challenge-prompt"></div>
+            <div class="ide-header">
+              <div>
+                <span class="dot red"></span><span class="dot amber"></span
+                ><span class="dot green"></span
+                ><strong id="fileName">challenge.py</strong>
+              </div>
+              <div class="ide-actions">
+                <button id="runButton" class="button primary">
+                  ▶ Run <kbd>⌘↵</kbd>
+                </button>
+                <button id="submitButton" class="button accent">
+                  Submit <kbd>⌘⇧↵</kbd>
+                </button>
+                <button
+                  id="resetButton"
+                  class="button primary"
+                  title="Reset code"
+                >
+                  Reset
+                </button>
+                <button
+                  id="hintButton"
+                  class="button primary"
+                  title="Hint"
+                  aria-label="Hint"
+                >
+                  Hint
+                </button>
+                <button
+                  id="fullscreenButton"
+                  class="icon-button"
+                  title="Fullscreen editor"
+                  aria-label="Fullscreen"
+                >
+                  ⛶
+                </button>
+              </div>
+            </div>
+            <div class="editor-wrap">
+              <textarea
+                id="codeEditor"
+                aria-label="Python code editor"
+              ></textarea>
+            </div>
+            <div class="bottom-panes">
+              <div class="console-pane">
+                <div class="pane-title">
+                  Console <span id="execTime" class="time-chip">— ms</span>
+                </div>
+                <pre id="consoleOutput" aria-live="polite">Ready.</pre>
+              </div>
+              <div class="visualizer-pane">
+                <div class="pane-title">Array Visualizer</div>
+                <div id="arrayVisualizer" class="array-grid">
+                  <p class="muted">Run code to inspect NumPy arrays.</p>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <div id="toastRegion" class="toast-region" aria-live="polite"></div>
+    <div id="modalRegion"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.18/mode/python/python.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js"></script>
+    <script src="js/storage.js"></script>
+    <script src="js/audio.js"></script>
+    <script src="js/fx.js"></script>
+    <script src="js/runner.js"></script>
+    <script src="js/curriculum.js"></script>
+    <script src="js/rewards.js"></script>
+    <script src="js/ranking.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
